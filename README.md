@@ -30,6 +30,54 @@ An authentication service built for microservice architecture where tokens gener
 ./run-tests.sh
 ```
 
+<details>
+  <summary>Expand to see test results</summary>
+
+```bash
+$ ./run-tests.sh
+=============================================== test session starts ================================================
+platform darwin -- Python 3.10.11, pytest-7.4.3, pluggy-1.6.0 -- /Users/parthbhatt/workspace/projects/more/iam-service/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/parthbhatt/workspace/projects/more/iam-service
+configfile: pytest.ini
+plugins: asyncio-0.21.1, anyio-4.10.0
+asyncio: mode=strict
+collected 29 items
+
+tests/test_auth.py::TestUserRegistration::test_user_registration_success PASSED                              [  3%]
+tests/test_auth.py::TestUserRegistration::test_user_registration_duplicate_email PASSED                      [  6%]
+tests/test_auth.py::TestUserRegistration::test_user_registration_short_password PASSED                       [ 10%]
+tests/test_auth.py::TestUserRegistration::test_user_registration_invalid_email PASSED                        [ 13%]
+tests/test_auth.py::TestUserRegistration::test_user_registration_missing_required_fields PASSED              [ 17%]
+tests/test_auth.py::TestUserRegistration::test_user_registration_extra_fields_rejected PASSED                [ 20%]
+tests/test_auth.py::TestUserLogin::test_login_success PASSED                                                 [ 24%]
+tests/test_auth.py::TestUserLogin::test_login_invalid_credentials PASSED                                     [ 27%]
+tests/test_auth.py::TestUserLogin::test_login_nonexistent_user PASSED                                        [ 31%]
+tests/test_auth.py::TestUserLogin::test_login_missing_credentials PASSED                                     [ 34%]
+tests/test_auth.py::TestUserLogin::test_login_extra_fields_rejected PASSED                                   [ 37%]
+tests/test_auth.py::TestStrongPasswordEnforcement::test_password_too_short PASSED                            [ 41%]
+tests/test_auth.py::TestStrongPasswordEnforcement::test_password_missing_uppercase PASSED                    [ 44%]
+tests/test_auth.py::TestStrongPasswordEnforcement::test_password_missing_lowercase PASSED                    [ 48%]
+tests/test_auth.py::TestStrongPasswordEnforcement::test_password_missing_digit PASSED                        [ 51%]
+tests/test_auth.py::TestStrongPasswordEnforcement::test_password_special_character_missing PASSED            [ 55%]
+tests/test_auth.py::TestStrongPasswordEnforcement::test_password_valid PASSED                                [ 58%]
+tests/test_integration.py::TestIntegrationScenarios::test_complete_user_workflow PASSED                      [ 62%]
+tests/test_integration.py::TestIntegrationScenarios::test_cross_user_access_denied_workflow PASSED           [ 65%]
+tests/test_integration.py::TestIntegrationScenarios::test_password_validation_integration PASSED             [ 68%]
+tests/test_integration.py::TestIntegrationScenarios::test_health_endpoint PASSED                             [ 72%]
+tests/test_users.py::TestUserAccess::test_get_user_self_access PASSED                                        [ 75%]
+tests/test_users.py::TestUserAccess::test_get_user_cross_access_forbidden PASSED                             [ 79%]
+tests/test_users.py::TestUserAccess::test_get_user_unauthorized PASSED                                       [ 82%]
+tests/test_users.py::TestUserAccess::test_get_user_invalid_token PASSED                                      [ 86%]
+tests/test_users.py::TestUserAccess::test_get_user_nonexistent PASSED                                        [ 89%]
+tests/test_users.py::TestUserAccess::test_get_user_malformed_user_id PASSED                                  [ 93%]
+tests/test_users.py::TestUserAccess::test_admin_can_access_any_user PASSED                                   [ 96%]
+tests/test_users.py::TestUserAccess::test_admin_can_access_own_data PASSED                                   [100%]
+
+================================================ 29 passed in 8.31s ================================================
+```
+</details>
+
 ### API Docs
 
 - Redoc: http://127.0.0.1:8000/redoc
