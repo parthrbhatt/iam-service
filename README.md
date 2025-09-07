@@ -84,6 +84,78 @@ tests/test_users.py::TestUserAccess::test_admin_can_access_own_data PASSED      
 - Redoc: http://127.0.0.1:8000/redoc
 - Swagger: http://127.0.0.1:8000/docs
 
+<details>
+  <summary>Expand to see API usage examples using curl</summary>
+
+#### 1. User Registration
+Register a new user account:
+
+```bash
+curl -X POST "http://localhost:8000/users" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Alice",
+    "email": "alice@example.com",
+    "date_of_birth": "2001-01-15",
+    "job_title": "Software Engineer",
+    "password": "SecurePass123!"
+  }'
+```
+
+Response:
+```json
+{
+  "id": "b55f404a-72a4-4fd4-a34d-605ef247d6b0",
+  "name": "Alice",
+  "email": "alice@example.com",
+  "date_of_birth": "2001-01-15",
+  "job_title": "Software Engineer",
+  "role": "user"
+}
+```
+
+#### 2. User Login
+Authenticate and get access token:
+
+```bash
+curl -X POST "http://localhost:8000/login" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "alice@example.com",
+    "password": "SecurePass123!"
+  }'
+```
+
+Response:
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJpYW0tc2VydmljZSIsInN1YiI6ImI1NWY0MDRhLTcyYTQtNGZkNC1hMzRkLTYwNWVmMjQ3ZDZiMCIsInJvbGUiOiJ1c2VyIiwiYXVkIjoiaWFtLXNlcnZpY2UiLCJqdGkiOiIwZDMyMWM3Yy01ZjEwLTQwZTMtOTRkOC1hNzUwZmZlNmJhNjciLCJpYXQiOjE3NTcyMjYzMTUsIm5iZiI6MTc1NzIyNjMxNSwiZXhwIjoxNzU3MjI5OTE1fQ.BbSDY6pIgZxy5DlVySe7T7xpDWQHcW_1b-zrLMZ-W-tzHlPReusAxu2XUz7sqpDKl6LKT6vdZlaoXEuEY9O3uYHdKqBOvTy1npuA5AxI67hZnTBpqbanQJ3ZXlkUe_lzJVoEgfjrVqFZfzJ5nVBPAomt-uZj9kovglyZHWBX2SsydsQiAtt7FPatXL-d2Pu-jpbi-Tub3FWDj-AYjr1vOKz4dxj6Kdl1VpbuRY1Q1sQXMIrMtrCjV9Oe6uA1dzp_RTUZiLROHD1992ot-e5ypnU1ybTW7Zu86RrqreBkvIAMgNLDyGewLhD8-IKUYvlxME-b9_r7oOP-eQT61-53TA",
+  "token_type": "bearer",
+  "expires_in": 3600
+}
+```
+
+#### 3. Get User Details
+Retrieve user information (requires authentication):
+
+```bash
+curl -X GET "http://localhost:8000/users/{id}" \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
+Response:
+```json
+{
+  "id": "b55f404a-72a4-4fd4-a34d-605ef247d6b0",
+  "name": "Alice",
+  "email": "alice@example.com",
+  "date_of_birth": "2001-01-15",
+  "job_title": "Software Engineer",
+  "role": "user"
+}
+```
+</details>
+
 ## Features Not Implemented
 
 This section mentions functionality that is not implemented due to various reasons.
