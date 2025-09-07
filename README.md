@@ -7,16 +7,17 @@ An authentication service built for microservice architecture where tokens gener
 ### Authentication
 - Enforces the use of strong passwords.
 - Hashing of passwords for secure storage.
-- JWT tokens signed using `RS256` (asymmetric key).
+- JWT implementation using `RS256` with public-private key pair for secure token generation and verification.
 - Standardized OAuth2 Bearer token scheme for authentication.
-- Supports key rotation.
+- Support for key rotation. Periodic key rotation is a security best practice.
 
 ### Authorization
-- Supports Role Based Access Control (RBAC) with user and admin roles
+- Supports Role Based Access Control (RBAC) with user and admin roles.
 - Self-service registration.
 
 ### Audit
 - Detailed audit logging of all API calls for security monitoring and forensic analysis.
+- Helps monitor failed/succesful login attempts, client IPs, token IDs  etc.
 
 ## Run
 
@@ -36,9 +37,9 @@ An authentication service built for microservice architecture where tokens gener
 ```bash
 $ ./run-tests.sh
 =============================================== test session starts ================================================
-platform darwin -- Python 3.10.11, pytest-7.4.3, pluggy-1.6.0 -- /Users/parthbhatt/workspace/projects/more/iam-service/.venv/bin/python
+platform darwin -- Python 3.10.11, pytest-7.4.3, pluggy-1.6.0 -- iam-service/.venv/bin/python
 cachedir: .pytest_cache
-rootdir: /Users/parthbhatt/workspace/projects/more/iam-service
+rootdir: iam-service
 configfile: pytest.ini
 plugins: asyncio-0.21.1, anyio-4.10.0
 asyncio: mode=strict
@@ -87,7 +88,7 @@ tests/test_users.py::TestUserAccess::test_admin_can_access_own_data PASSED      
 
 This section mentions functionality that is not implemented due to various reasons.
 
-#### Email Verification
+### Email Verification
 
 - The service lacks ability to verify user's email at the time of registration. Ideally, the user should have to verify their email before they are allowed to login.
 - This is not implemented because it requires infrastructure (or an external service like SNS or Twilio) to send emails. This has been left out for simplicity.
@@ -105,6 +106,7 @@ Followng infrastructure is strongly recommended while running the service in pro
 - Enforce rate limits at API gateway. The is needed for all endpoints, but especially for the user registration endpoint. Not having rate limits exposes the service to various attacks including user enumeration.
 - A Web Application Firewall (WAF) will help guard against several threats like DDoS, malicious requests, geographical blocking etc.
 - The service must be made available over HTTPS.
+- The service should emit metrics (failed/successful login attempts, authorization failures, invalid tokens etc.) that can be used for observability - monitoring and alerting.
 - These are not implemented as they require additional infrastructure and implementation time.
 
 ### Other Missing Security Features
@@ -112,4 +114,4 @@ Followng infrastructure is strongly recommended while running the service in pro
 - Suspend a user account for a certain duration for successively failing 'n' login attempts within a time window.
 - Implement MFA.
 - Current Authorization model is all-or-nothing where a role is either granted or not. This can be extended so that granular permissions can be managed within a role.
-- These are not implemented as due to time constraints. They also require additional infrastructures.
+- These are not implemented due to time constraints. They also require additional infrastructures.
